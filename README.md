@@ -12,6 +12,13 @@ Functional Requirements
    1. Render obtained data in the console.
    2. Create div elements to visually display weather information.
 
+3. Search by city name:
+
+   1. Create a search query for weather data
+   2. Use Geocoding API to search for weather data
+   3. Render obtained data in the console
+   4. Update the UI with weather data
+
 Technologies Used
 
 1. React.js

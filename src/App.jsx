@@ -6,10 +6,16 @@ const App = () => {
   const [lat, setLat] = useState();
   const [lon, setLon] = useState();
   const [weather, setWeather] = useState();
+  const [cityName, setCityName] = useState();
+  const [inputStr, setInputStr] = useState();
 
   useEffect(() => {
     getWeatherData();
   }, [lat, lon]);
+
+  useEffect(() => {
+    getWeatherFromCityName();
+  }, [cityName]);
 
   async function getWeatherData() {
     if (lat && lon) {
@@ -22,6 +28,21 @@ const App = () => {
     }
   }
 
+  async function getWeatherFromCityName() {
+    if (cityName) {
+      const res = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?units=metric&q=${cityName}&appid=${apiKey}`
+      );
+      const data = await res.json();
+      console.log(data);
+      if (data.cod === "404") {
+        alert("City Not Found");
+      } else {
+        setWeather(data);
+      }
+    }
+  }
+
   function getLocation() {
     navigator.geolocation.getCurrentPosition((position) => {
       setLat(position.coords.latitude);
@@ -29,11 +50,9 @@ const App = () => {
     });
   }
 
-  function formatTime(date) {
-    let hours = date.getUTCHours().toString().padStart(2, "0");
-    let minutes = date.getUTCMinutes().toString().padStart(2, "0");
-    let seconds = date.getUTCSeconds().toString().padStart(2, "0");
-    return `${hours}:${minutes}:${seconds}`;
+  function handleSubmit(e) {
+    e.preventDefault();
+    setCityName(inputStr);
   }
 
   return (
@@ -42,7 +61,18 @@ const App = () => {
         <h1>Weather App</h1>
       </header>
       <main>
-        <button onClick={getLocation}>Get Weather</button>
+        <button onClick={getLocation}>Get Weather From Current Location</button>
+        <br />
+        <form onSubmit={handleSubmit}>
+          <input
+            type="text"
+            placeholder="City name..."
+            required
+            onChange={(e) => setInputStr(e.target.value)}
+          />
+          <button type="submit">Get Weather</button>
+        </form>
+
         {weather && (
           <div>
             <div>
