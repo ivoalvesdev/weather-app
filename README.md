@@ -14,10 +14,16 @@ Functional Requirements
 
 3. Search by city name:
 
-   1. Create a search query for weather data
-   2. Use Geocoding API to search for weather data
-   3. Render obtained data in the console
-   4. Update the UI with weather data
+   1. Create a search query for weather data.
+   2. Use Geocoding API to search for weather data.
+   3. Render obtained data in the console.
+   4. Update the UI with weather data.
+
+4. Style the UI using Tailwind CSS:
+
+   1. Integrate Tailwind CSS into the project.
+   2. Apply Tailwind CSS classes to style the visual elements of the weather app.
+   3. Replace some text with icons.
 
 Technologies Used
 
