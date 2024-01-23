@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { FaLocationDot } from "react-icons/fa6";
+import { FaLocationCrosshairs } from "react-icons/fa6";
+import { WiHumidity } from "react-icons/wi";
+import { FaWind } from "react-icons/fa6";
 
 const apiKey = import.meta.env.VITE_API_KEY;
 
@@ -63,16 +67,16 @@ const App = () => {
 
   return (
     <div className="bg-sky-200 h-screen">
-      <header className="bg-slate-900 text-white text-center p-5">
+      <header className="bg-sky-900 text-white text-center p-5">
         <h1 className="text-3xl">Weather App</h1>
       </header>
-      <main className="container mx-auto my-8 max-w-lg px-5">
+      <main className="container mx-auto my-8 max-w-2xl px-5">
         <div className="text-center">
           <button
-            className="bg-sky-500 text-white px-5 py-3 rounded-xl mb-5"
+            className="bg-sky-500 hover:bg-sky-600 transition-all text-white px-5 py-3 rounded-full mb-5 aspect-square text-xl"
             onClick={getLocation}
           >
-            Get Weather From Current Location
+            <FaLocationCrosshairs />
           </button>
           <form onSubmit={handleSubmit}>
             <input
@@ -83,25 +87,35 @@ const App = () => {
               onChange={(e) => setInputStr(e.target.value)}
             />
             <button
-              className="bg-sky-500 text-white px-5 py-3 mb-5 rounded-r-xl"
+              className="bg-sky-500 hover:bg-sky-600 transition-all text-white px-5 py-3 mb-5 rounded-r-xl"
               type="submit"
             >
-              Get Weather
+              Search
             </button>
           </form>
         </div>
 
         {weather && (
           <div className="mt-5">
-            <div className="flex flex-col lg:grid grid-cols-2 gap-5">
-              <div className="bg-sky-100 p-5 rounded-xl lg:aspect-square">
-                <h2 className="text-3xl font-bold">{weather.main.temp} º</h2>
-                <p>{weather.weather[0].main}</p>
+            <div className="flex flex-col sm:grid grid-cols-2 gap-5">
+              <div className="bg-sky-100  hover:bg-sky-50 transition-all p-5 rounded-xl sm:aspect-square flex sm:flex-col items-center sm:justify-center gap-5">
+                <img
+                  className="bg-sky-200 rounded-full sm:mb-3"
+                  src={`https://openweathermap.org/img/wn/${weather.weather[0].icon}@2x.png`}
+                  alt="icon"
+                />
+                <div>
+                  <h2 className="text-3xl font-bold">{weather.main.temp} º</h2>
+                  <p>{weather.weather[0].main}</p>
+                </div>
               </div>
 
-              <div className="bg-sky-100 p-5 rounded-xl lg:aspect-square">
-                <h3 className="text-xl font-bold">{weather.name}</h3>
-                <p className="text-lg">
+              <div className="bg-sky-100  hover:bg-sky-50 transition-all p-5 sm:p-10 rounded-xl sm:aspect-square">
+                <h3 className="text-xl font-bold flex items-center gap-3">
+                  <FaLocationDot />
+                  {weather.name}
+                </h3>
+                <p className="text-lg font-bold mt-3">
                   {weather.main.temp_min} º / {weather.main.temp_max} º
                 </p>
                 <p>Feels Like: {weather.main.feels_like} º</p>
@@ -109,11 +123,17 @@ const App = () => {
             </div>
             <br />
             <div className="grid grid-cols-2 gap-5">
-              <div className="bg-sky-100 p-5 rounded-xl aspect-square flex flex-col items-center justify-center">
-                <b>Humidity:</b> {weather.main.humidity}%
+              <div className="bg-sky-100  hover:bg-sky-50 transition-all p-5 rounded-xl aspect-square flex flex-col items-center justify-center">
+                <div className="text-6xl text-sky-600">
+                  <WiHumidity />
+                </div>
+                <b className="text-lg">{weather.main.humidity}%</b>
               </div>
-              <div className="bg-sky-100 p-5 rounded-xl aspect-square flex flex-col items-center justify-center">
-                <b>Wind:</b> {weather.wind.speed} km/h
+              <div className="bg-sky-100  hover:bg-sky-50 transition-all p-5 rounded-xl aspect-square flex flex-col items-center justify-center">
+                <div className="text-4xl text-slate-600">
+                  <FaWind />
+                </div>
+                <b className="text-lg">{weather.wind.speed} km/h</b>
               </div>
             </div>
           </div>
