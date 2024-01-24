@@ -13,6 +13,8 @@ const App = () => {
   const [cityName, setCityName] = useState();
   const [inputStr, setInputStr] = useState();
 
+  useEffect(() => getLocation(), []);
+
   useEffect(() => {
     getWeatherData();
   }, [lat, lon]);
@@ -63,6 +65,7 @@ const App = () => {
   function handleSubmit(e) {
     e.preventDefault();
     setCityName(inputStr);
+    setInputStr("");
   }
 
   return (
@@ -75,6 +78,7 @@ const App = () => {
           <button
             className="bg-sky-500 hover:bg-sky-600 transition-all text-white px-5 py-3 rounded-full mb-5 aspect-square text-xl shadow"
             onClick={getLocation}
+            title="Get Current Location"
           >
             <FaLocationCrosshairs />
           </button>
@@ -85,6 +89,7 @@ const App = () => {
               placeholder="City name..."
               required
               onChange={(e) => setInputStr(e.target.value)}
+              value={inputStr}
             />
             <button
               className="bg-sky-500 hover:bg-sky-600 transition-all text-white px-5 py-3 mb-5 rounded-r-xl shadow"
